@@ -9,10 +9,11 @@ from forms.ChooseModePage import ChooseModePage
 from forms.OneLotPage import OneLotPage
 from forms.AuctionPage import AuctionPage
 
+
 class MainWizard(QtGui.QWizard):
     def __init__(self, *args, **kwargs):
         self.nextPage = 1
-        
+
         super(MainWizard, self).__init__(*args, **kwargs)
 
     def run(self):
@@ -36,7 +37,6 @@ class MainWizard(QtGui.QWizard):
         return self.nextPage is not False
 
     def finished(self, *args, **kwargs):
-        print "asdasdasd"
         super(MainWizard, self).finished(*args, **kwargs)
 
     def nextId(self, *args, **kwargs):

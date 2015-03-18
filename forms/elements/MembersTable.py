@@ -33,10 +33,10 @@ class MembersTable(QtGui.QTableWidget):
             layout.addWidget(checkbox)
             widget.setLayout(layout)
             self.setCellWidget(i, 1, widget)
-    
+
     def getMembers(self):
         members = []
-        for i in range(0,50):
+        for i in range(0, 50):
             item = self.item(i, 0)
             if item is not None:
                 memberName = item.text().strip()
@@ -48,3 +48,9 @@ class MembersTable(QtGui.QTableWidget):
                         "isOwner": memberIsOwner
                     })
         return members
+
+    def setMembers(self, members):
+        for i, member in enumerate(members):
+            self.setItem(i, 0, QtGui.QTableWidgetItem(member['name']))
+            self.drawCheckbox(i)
+            self.cellWidget(i, 1).findChildren(QtGui.QCheckBox)[0].setChecked(member['isOwner'])

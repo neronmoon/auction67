@@ -39,35 +39,41 @@ class OneLotPage(QtGui.QWizardPage):
         self.setLayout(layout)
         self.setWindowModality(QtCore.Qt.NonModal)
         super(OneLotPage, self).initializePage(*args, **kwargs)
-
         self.wizard().button(self.wizard().NextButton).clicked.disconnect(self.wizard().next)
         self.wizard().button(self.wizard().NextButton).clicked.connect(self.nextButton)
         self.wizard().button(self.wizard().BackButton).clicked.connect(self.backButton)
-
+        if app.auction is not None:
+            self.loadAuction(app.auction)
 
     def isFinalPage(self, *args, **kwargs):
         return True
 
+    def loadAuction(self, auction):
+        self.findChild(MembersTable).setMembers(auction.members)
+        lot = auction.lots[0]
+        self.findChild(QtGui.QTextEdit).setText(lot.title)
+        self.findChild(QtGui.QLineEdit).setText(unicode(lot.startPrice))
+
     def validate(self):
         result = True
-        title = self.title.toPlainText().strip()
+        title = self.findChild(QtGui.QTextEdit).toPlainText().strip()
         if len(title) < 5:
             QtGui.QMessageBox.critical(None, u"Ошибка", u"Название лота должно содержать как минимум 5 символов")
             return False, "", 0, []
-        price = self.price.text()
+        price = self.findChild(QtGui.QLineEdit).text().strip()
         try:
-            price = float(price)
+            float(price)
         except ValueError:
             QtGui.QMessageBox.critical(None, u"Ошибка", u"Поле начальной цены введено неверно")
             return False, "", 0, []
 
-        members = self.members.getMembers()
+        members = self.findChild(MembersTable).getMembers()
         if len(members) < 1:
             QtGui.QMessageBox.critical(None, u"Ошибка", u"Введите как минимум одного участника аукциона")
             return False, "", 0, []
 
         return result, title, price, members
-    
+
     def onNext(self):
         result, title, price, members = self.validate()
         if not result:

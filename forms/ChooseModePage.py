@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from PySide import QtGui
 from Application import *
+import cPickle as pickle
+from Auction import Auction
+
 
 class ChooseModePage(QtGui.QWizardPage):
     def __init__(self, *args, **kwargs):
@@ -38,8 +41,24 @@ class ChooseModePage(QtGui.QWizardPage):
         pass
 
     def onNext(self):
-        for k, radio in self.modes.iteritems():
+        for k, radio in enumerate(self.findChildren(QtGui.QRadioButton)):
             if radio.isChecked():
-                app.setMode(k)
+                if k == 2:
+                    openDialog = QtGui.QFileDialog()
+                    filename = openDialog.getOpenFileName()[0]
+                    if ".auc" not in filename:
+                        filename += ".auc"
+                    try:
+                        file = open(filename, "r")
+                    except Exception:
+                        QtGui.QMessageBox.critical(None, u"Ошибка", u"Файл не может быть открыт")
+                        return False
+                    loaded = pickle.load(file)
+                    auction = Auction(loaded['lots'], loaded['members'])
+                    app.setAuction(auction)
+                    app.setMode(loaded['applicationMode'])
+                    self.wizard().page(app.getLotPageId()).cleanupPage()
+                else:
+                    app.setMode(k)
                 return app.getLotPageId()
         return False

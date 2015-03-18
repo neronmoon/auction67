@@ -17,8 +17,6 @@ class Application():
             return 2
         elif self.mode == self.MultiLotMode:
             return 3
-        elif self.mode == self.MultiLotMode:
-            return 4
         return False
 
 app = Application()
