@@ -9,7 +9,7 @@ class MembersTable(QtGui.QTableWidget):
         super(MembersTable, self).__init__(*args, **kwargs)
         self.setRowCount(50)
         self.setColumnCount(2)
-        self.setColumnWidth(0, 600)
+        self.setColumnWidth(0, 570)
         self.setColumnWidth(1, 70)
         self.setHorizontalHeaderLabels([u"Участник аукциона", u"Правообл."])
         for i in range(0, 50):

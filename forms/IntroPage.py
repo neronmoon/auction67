@@ -15,8 +15,10 @@ class IntroPage(QtGui.QWizardPage):
         label = QtGui.QLabel(u'Нажмите кнопку "Далее" для начала работы.')
         layout.addWidget(label)
         self.setLayout(layout)
-        
-        super(IntroPage, self).initializePage(*args, **kwargs)
-        
-    def onNext(self):
+
+    def showEvent(self, *args, **kwargs):
+        self.wizard().setOption(QtGui.QWizard.HaveCustomButton1, False)
+        self.wizard().setButtonText(self.wizard().NextButton, u"Далее")
+
+    def isCommitPage(self):
         return True

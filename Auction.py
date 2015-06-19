@@ -1,4 +1,3 @@
 class Auction():
-    def __init__(self, lots, members):
+    def __init__(self, lots):
         self.lots = lots
-        self.members = members

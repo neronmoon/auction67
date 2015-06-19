@@ -1,22 +1,17 @@
 class Application():
-    _instance = None
-    mode = None
-    OneLotMode = 0
-    MultiLotMode = 1
-    LoadMode = 2
-    auction = None
+    PrepareMode = 0
+    LoadMode = 1
 
-    def setMode(self, mode):
+    def __init__(self):
+        self._instance = None
+        self.mode = None
+        self.auction = None
+
+    def set_mode(self, mode):
         self.mode = mode
-    
-    def setAuction(self, auction):
+
+    def set_auction(self, auction):
         self.auction = auction
-    
-    def getLotPageId(self):
-        if self.mode == self.OneLotMode:
-            return 2
-        elif self.mode == self.MultiLotMode:
-            return 3
-        return False
+
 
 app = Application()
