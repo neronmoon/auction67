@@ -2,18 +2,23 @@
 
 from PySide import QtGui
 from PySide import QtCore
+from texts import MEMBER, OWNER
 
 
 class MembersTable(QtGui.QTableWidget):
     def __init__(self, *args, **kwargs):
         super(MembersTable, self).__init__(*args, **kwargs)
-        self.setRowCount(50)
-        self.setColumnCount(2)
-        self.setColumnWidth(0, 570)
-        self.setColumnWidth(1, 70)
-        self.setHorizontalHeaderLabels([u"Участник аукциона", u"Правообл."])
-        for i in range(0, 50):
-            self.drawCheckbox(i)
+        self.member_count = 20
+        self.setRowCount(self.member_count)
+        # self.setColumnCount(2)
+        self.setColumnCount(1)
+        self.setColumnWidth(0, 640)
+        # self.setColumnWidth(0, 570)
+        # self.setColumnWidth(1, 70)
+        # self.setHorizontalHeaderLabels([MEMBER, OWNER])
+        self.setHorizontalHeaderLabels([MEMBER])
+        # for i in range(0, self.member_count):
+        #     self.drawCheckbox(i)
 
     def drawCheckbox(self, i):
         widget = self.cellWidget(i, 1)
@@ -36,21 +41,21 @@ class MembersTable(QtGui.QTableWidget):
 
     def getMembers(self):
         members = []
-        for i in range(0, 50):
+        for i in range(0, self.member_count):
             item = self.item(i, 0)
             if item is not None:
                 memberName = item.text().strip()
-                memberIsOwner = self.cellWidget(i, 1).findChildren(QtGui.QCheckBox)[0].isChecked()
+                # memberIsOwner = self.cellWidget(i, 1).findChildren(QtGui.QCheckBox)[0].isChecked()
                 if memberName != "":
                     members.append({
-                        "card": i,
+                        "card": i+1,
                         "name": memberName,
-                        "isOwner": memberIsOwner
+                        # "isOwner": memberIsOwner
                     })
         return members
 
     def setMembers(self, members):
         for i, member in enumerate(members):
             self.setItem(i, 0, QtGui.QTableWidgetItem(member['name']))
-            self.drawCheckbox(i)
-            self.cellWidget(i, 1).findChildren(QtGui.QCheckBox)[0].setChecked(member['isOwner'])
+            # self.drawCheckbox(i)
+            # self.cellWidget(i, 1).findChildren(QtGui.QCheckBox)[0].setChecked(member['isOwner'])

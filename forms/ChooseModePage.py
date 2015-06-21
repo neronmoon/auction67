@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from PySide import QtGui
 from Application import *
+from texts import *
 
 
 class ChooseModePage(QtGui.QWizardPage):
@@ -10,16 +11,18 @@ class ChooseModePage(QtGui.QWizardPage):
 
     def showEvent(self, *args, **kwargs):
         self.wizard().setOption(QtGui.QWizard.HaveCustomButton1, False)
-        self.wizard().setButtonText(self.wizard().NextButton, u"Далее")
+        self.wizard().setButtonText(self.wizard().NextButton, NEXT_BUTTON)
+        self.wizard().setFixedWidth(800)
+        self.wizard().setFixedHeight(600)
 
     def initializePage(self, *args, **kwargs):
 
-        self.setTitle(u"Начало работы")
-        self.setSubTitle(u"Выберите нужное действие и нажмите кнопку \"Далее\"")
+        self.setTitle(CMP_TITLE)
+        self.setSubTitle(CMP_SUBTITLE)
         layout = QtGui.QVBoxLayout()
         layout.setSpacing(15)
-        self.modes[Application.PrepareMode] = QtGui.QRadioButton(u"Провести или подготовить аукцион")
-        self.modes[Application.LoadMode] = QtGui.QRadioButton(u"Загрузить из файла ранее сохраненный аукцион")
+        self.modes[Application.PrepareMode] = QtGui.QRadioButton(CMP_PREPARE_MODE)
+        self.modes[Application.LoadMode] = QtGui.QRadioButton(CMP_LOAD_MODE)
         for k, radio in self.modes.iteritems():
             layout.addWidget(radio)
         self.setLayout(layout)
@@ -32,5 +35,5 @@ class ChooseModePage(QtGui.QWizardPage):
             if radio.isChecked():
                 app.set_mode(k)
                 return True
-        QtGui.QMessageBox.warning(self, u'', u"Выберите режим работы")
+        QtGui.QMessageBox.warning(self, u'', CMP_MODE)
         return False

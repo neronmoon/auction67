@@ -4,7 +4,7 @@ from PySide import QtGui
 
 
 class Slider(QtGui.QVBoxLayout):
-    def __init__(self, slides, *args, **kwargs):
+    def __init__(self, slides, show_pagination=True, *args, **kwargs):
         super(Slider, self).__init__(*args, **kwargs)
         self.current_slide = 0
         self.slides = slides
@@ -22,7 +22,8 @@ class Slider(QtGui.QVBoxLayout):
             w = QtGui.QWidget()
             w.setLayout(slide)
             self.slides_box.addWidget(w)
-        self.addLayout(button_layout)
+        if show_pagination:
+            self.addLayout(button_layout)
         self.addLayout(self.slides_box)
 
     def next_click(self):
