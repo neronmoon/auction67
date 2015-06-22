@@ -28,7 +28,7 @@ class AuctionPage(AbstractAuctionPage):
         return True
 
     def initializePage(self, *args, **kwargs):
-        self.debug()
+        # self.debug()
         slides = []
         for i, lot in enumerate(app.auction.lots):
             self.history[i] = []

@@ -20,7 +20,7 @@ class MainWizard(QtGui.QWizard):
         self.add_pages()
 
     def add_pages(self):
-        # self.addPage(IntroPage())
-        # self.addPage(ChooseModePage())
-        # self.addPage(LotsPage())
+        self.addPage(IntroPage())
+        self.addPage(ChooseModePage())
+        self.addPage(LotsPage())
         self.addPage(AuctionPage())
