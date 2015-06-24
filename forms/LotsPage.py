@@ -86,7 +86,7 @@ class LotsPage(QtGui.QWizardPage):
             title = self.findChild(QtGui.QTextEdit, "title%s" % i).toPlainText().strip()
             if len(title) == 0:
                 continue
-            start_price = self.findChild(QtGui.QLineEdit, "price%s" % i).text().strip()
+            start_price = self.findChild(QtGui.QLineEdit, "price%s" % i).text().replace(" ", "").replace(",", ".").strip()
             if convert:
                 start_price = float(start_price)
             members = self.findChild(MembersTable, "members%s" % i).getMembers()
