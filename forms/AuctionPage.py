@@ -127,13 +127,18 @@ class AuctionPage(AbstractAuctionPage):
         v_layout = QtGui.QVBoxLayout()
         v_layout.addLayout(self.get_badge(
             AUCTION_LOT_RESULT_TITLE,
-            badge_text.format(**badge_params) if success else AUCTION_LOT_FAIL_RESULT_TEXT
+            badge_text.format(**badge_params) if success else AUCTION_LOT_FAIL_RESULT_TEXT,
+            "result_badge%s" % i
         ))
         advice_label = QtGui.QLabel(advice_text.format(**advice_params) if success else AUCTION_LOT_FAIL_RESULT_ADVICE)
         advice_label.setWordWrap(True)
         advice_label.setObjectName("advice%s" % i)
         advice_label.setAlignment(QtCore.Qt.AlignLeft)
         v_layout.addWidget(advice_label)
+        save_btn = QtGui.QPushButton(AUCTION_SAVE_HISTORY_BTN)
+        save_btn.setObjectName("savebtn%s" % i)
+        save_btn.clicked.connect(self.save_history)
+        v_layout.addWidget(save_btn)
         slide.addLayout(v_layout)
 
     def clear_layout(self, layout):
@@ -154,6 +159,43 @@ class AuctionPage(AbstractAuctionPage):
             if reply == QtGui.QMessageBox.Yes:
                 state = self.history[i].pop()
                 self.apply_state(i, state)
+
+    def save_history(self):
+        data = self.sender().objectName().replace("savebtn", "")
+        i = int(data[0])
+        lot = app.auction.lots[i]
+        dialog = QtGui.QFileDialog()
+        filename = dialog.getSaveFileName()[0]
+        if ".txt" not in filename:
+            filename += ".txt"
+        members_text = MEMBERS_CARDS + ":\n"
+        for member in lot.members:
+            members_text += "%s: \"%s\"\n" % (member["card"], member["name"])
+        text = u"%s \"%s\"\n\n%s: %s\n%s: %s\n\n%s\n\n%s:\n\n" % (
+            LOT_NUM % (i+1), lot.title,
+            LOT_STEPS_UP, LOT_STEPS_UP_VALUE,
+            LOT_START_PRICE_SHORT, self.format_price(lot.start_price),
+            members_text,
+            STEPS
+        )
+        for s, state in enumerate(self.history[i]):
+            step_meta = "%s\n%s : %s\n%s: %s\n%s: %s\n%s" % (
+                BR,
+                LOT_STEP_UP, unicode(state.price_step[0]) + u"% " + self.format_price(state.price_step[1]),
+                LOT_LAST_OFFER, "%s \"%s\"" % (state.last_offer[0], state.last_offer[1]) if state.last_offer is not None else "-",
+                LOT_PRELAST_OFFER, "%s \"%s\"" % (state.prelast_offer[0], state.prelast_offer[1]) if state.prelast_offer is not None else "-",
+                BR
+            )
+            step_text = "%s #%s" % (STEP, s)
+            text += "%s\n%s\n%s\n\n" % (step_text, state.advice, step_meta)
+        text += "\n\n%s\n%s" % (
+            BR,
+            self.get_value("advice%s" % i)
+        )
+        text = self.word_wrap(text, 120)
+        report_file = open(filename, "w")
+        report_file.write(text.encode('utf8'))
+        QtGui.QMessageBox.information(self, SAVING, AUCTION_SAVE_HISTORY_SAVED_TEXT)
 
     def next_step(self):
         data = self.sender().objectName().split("member")
