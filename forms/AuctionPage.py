@@ -137,6 +137,7 @@ class AuctionPage(AbstractAuctionPage):
         v_layout.addWidget(advice_label)
         save_btn = QtGui.QPushButton(AUCTION_SAVE_HISTORY_BTN)
         save_btn.setObjectName("savebtn%s" % i)
+        save_btn.setFixedWidth(160)
         save_btn.clicked.connect(self.save_history)
         v_layout.addWidget(save_btn)
         slide.addLayout(v_layout)
