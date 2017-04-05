@@ -6,11 +6,10 @@ version: "{build}"
 
 install:
   - python --version
-  - pip install -U PySide
-  - pip install pyinstaller
+  - pip install -U PySide pyinstaller
 
 build_script:
   - pyinstaller run.py
 
 artifacts:
-  - path: run.exe
+  - path: build\run\run.exe
