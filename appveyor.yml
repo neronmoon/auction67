@@ -12,4 +12,4 @@ build_script:
   - pyinstaller run.py
 
 artifacts:
-  - path: path: 'build\run\*'
+  - path: 'build\run\*'
