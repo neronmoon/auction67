@@ -10,7 +10,7 @@ install:
 
 build_script:
   - pyinstaller run.py
+  - copy C:\Windows\system32\python27.dll build\run\
 
 artifacts:
   - path: 'build\run\*'
-  - path: ..\..\Windows\System\python27.dll
