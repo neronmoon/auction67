@@ -7,3 +7,7 @@ version: "{build}"
 install:
   - python --version
   - pip install -U PySide
+  - pip install pyinstaller
+
+build_script:
+  - pyinstaller run.py
