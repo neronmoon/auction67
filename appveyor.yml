@@ -10,7 +10,7 @@ install:
 
 build_script:
   - pyi-makespec -F run.py
-  - pyinstaller -n auction67 run.spec
+  - pyinstaller run.spec
 
 artifacts:
   - path: 'dist\run.exe'
