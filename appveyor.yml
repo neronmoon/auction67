@@ -14,3 +14,14 @@ build_script:
 
 artifacts:
   - path: 'dist\run.exe'
+
+deploy:
+  release: auction67-v$(appveyor_build_version)
+  provider: GitHub
+  auth_token:
+    secure: 83v5Rb8DnAangj1Sa4eHj9EbazexsQSvA018dHo9cLI1i5JWKbhdkcnRHPmcxLnC
+  artifact: dist\run.exe
+  draft: false
+  prerelease: false
+  on:
+    branch: master
