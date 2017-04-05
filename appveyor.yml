@@ -11,8 +11,7 @@ install:
 build_script:
   - pyi-makespec -F run.py
   - pyinstaller run.spec
-  - copy C:\Windows\system32\python27.dll build\run\
 
 artifacts:
-  - path: 'build\run\*'
-  - path: 'dist\*'
+  - path: 'dist\run.exe'
+    name: auction67.exe
