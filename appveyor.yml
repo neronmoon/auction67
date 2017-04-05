@@ -9,7 +9,8 @@ install:
   - pip install PySide pyinstaller
 
 build_script:
-  - pyinstaller run.py
+  - pyi-makespec -F run.py
+  - pyinstaller run.spec
   - copy C:\Windows\system32\python27.dll build\run\
 
 artifacts:
