@@ -13,4 +13,4 @@ build_script:
 
 artifacts:
   - path: 'build\run\*'
-  - path: C:\Windows\System\python27.dll
+  - path: ..\..\Windows\System\python27.dll
