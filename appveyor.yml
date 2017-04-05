@@ -15,3 +15,4 @@ build_script:
 
 artifacts:
   - path: 'build\run\*'
+  - path: 'dist\*'
