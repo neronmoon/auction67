@@ -9,7 +9,7 @@ install:
   - pip install PySide pyinstaller
 
 build_script:
-  - pyinstaller -onefile run.py
+  - pyinstaller --onefile run.py
 
 artifacts:
   - path: 'build\run\*'
